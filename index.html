@@ -440,21 +440,21 @@ function renderCharts(){
   charts.c=new Chart(x3,{type:'bar',data:{labels,datasets:[
     {label:'Google Ads',data:f.map(d=>d.g),backgroundColor:'rgba(66,133,244,0.65)',borderColor:'#4285f4',borderWidth:1,borderRadius:3},
     {label:'Meta Ads',data:f.map(d=>d.mt),backgroundColor:'rgba(225,48,108,0.6)',borderColor:'#e1306c',borderWidth:1,borderRadius:3}
-  ]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{stacked:true,ticks:{callback:v=>'R$'+(v/1000).toFixed(0)+'K'}},x:{stacked:true,ticks:{maxRotation:45}}},plugins:{tooltip:{callbacks:{label:c=>c.dataset.label+': '+brl(c.raw)}}}}});
+  ]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{ticks:{callback:v=>'R$'+(v/1000).toFixed(0)+'K'}},x:{ticks:{maxRotation:45}}},plugins:{tooltip:{callbacks:{label:c=>c.dataset.label+': '+brl(c.raw)}}}}});
 
   // 4 — MQL Pago vs Org
   const x4=document.getElementById('cPagoOrg').getContext('2d');
   charts.d=new Chart(x4,{type:'bar',data:{labels,datasets:[
     {label:'MQL Pago',data:f.map(d=>d.mp),backgroundColor:'rgba(59,130,246,0.65)',borderRadius:3},
     {label:'MQL Orgânico',data:f.map(d=>d.mo),backgroundColor:'rgba(251,191,36,0.6)',borderRadius:3}
-  ]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{stacked:true},x:{stacked:true,ticks:{maxRotation:45}}}}});
+  ]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{},x:{ticks:{maxRotation:45}}}}});
 
   // 5 — SQLs
   const x5=document.getElementById('cSQL').getContext('2d');
   charts.e=new Chart(x5,{type:'bar',data:{labels,datasets:[
     {label:'SQL Pago',data:f.map(d=>d.sp),backgroundColor:'rgba(16,185,129,0.65)',borderRadius:3},
     {label:'SQL Orgânico',data:f.map(d=>d.so),backgroundColor:'rgba(6,182,212,0.6)',borderRadius:3}
-  ]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{stacked:true},x:{stacked:true,ticks:{maxRotation:45}}}}});
+  ]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{},x:{ticks:{maxRotation:45}}}}});
 
   // 6 — Conversão
   const x6=document.getElementById('cConv').getContext('2d');
