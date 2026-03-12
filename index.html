@@ -426,14 +426,14 @@ function renderCharts(){
   // 1 — Despesas vs MQLs
   const x1=document.getElementById('cInvestMQL').getContext('2d');
   charts.a=new Chart(x1,{data:{labels,datasets:[
-    {type:'bar',label:'Despesas (R$)',data:f.map(d=>d.t),backgroundColor:grad(x1,'rgba(59,130,246,0.55)','rgba(59,130,246,0.1)'),borderColor:'rgba(59,130,246,0.7)',borderWidth:1,borderRadius:5,yAxisID:'y',order:2},
+    {type:'bar',label:'Despesas (R$)',data:f.map(d=>d.t),backgroundColor:'rgba(59,130,246,0.45)',borderColor:'rgba(59,130,246,0.7)',borderWidth:1,borderRadius:5,yAxisID:'y',order:2},
     {type:'line',label:'MQL Pago',data:f.map(d=>d.mp),borderColor:'#10b981',backgroundColor:'rgba(16,185,129,0.08)',borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#10b981',tension:.35,fill:true,yAxisID:'y1',order:1},
     {type:'line',label:'MQL Orgânico',data:f.map(d=>d.mo),borderColor:'#fbbf24',borderWidth:2,pointRadius:2,pointBackgroundColor:'#fbbf24',tension:.35,borderDash:[5,3],yAxisID:'y1',order:0}
   ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},scales:{y:{position:'left',title:{display:true,text:'Despesas (R$)',color:'#475569'},ticks:{callback:v=>'R$'+(v/1000).toFixed(0)+'K'}},y1:{position:'right',grid:{drawOnChartArea:false},title:{display:true,text:'MQLs',color:'#475569'}},x:{ticks:{maxRotation:45}}},plugins:{tooltip:{callbacks:{label:ctx=>ctx.dataset.label+': '+(ctx.datasetIndex===0?brl(ctx.raw):ctx.raw)}}}}});
 
   // 2 — Custo MQL
   const x2=document.getElementById('cCustoMQL').getContext('2d');
-  charts.b=new Chart(x2,{type:'line',data:{labels,datasets:[{label:'Custo MQL (R$)',data:f.map(d=>d.mp>0?d.cm:null),borderColor:'#10b981',backgroundColor:grad(x2,'rgba(16,185,129,0.18)','rgba(16,185,129,0)'),fill:true,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#10b981',tension:.35,spanGaps:true}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:'R$ por MQL',color:'#475569'},ticks:{callback:v=>'R$'+v.toFixed(0)}},x:{ticks:{maxRotation:45}}},plugins:{tooltip:{callbacks:{label:c=>'Custo MQL: '+brl(c.raw)}}}}});
+  charts.b=new Chart(x2,{type:'line',data:{labels,datasets:[{label:'Custo MQL (R$)',data:f.map(d=>d.mp>0?d.cm:null),borderColor:'#10b981',backgroundColor:'rgba(16,185,129,0.1)',fill:true,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#10b981',tension:.35,spanGaps:true}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:'R$ por MQL',color:'#475569'},ticks:{callback:v=>'R$'+v.toFixed(0)}},x:{ticks:{maxRotation:45}}},plugins:{tooltip:{callbacks:{label:c=>'Custo MQL: '+brl(c.raw)}}}}});
 
   // 3 — Google vs Meta
   const x3=document.getElementById('cGoogleMeta').getContext('2d');
@@ -458,7 +458,7 @@ function renderCharts(){
 
   // 6 — Conversão
   const x6=document.getElementById('cConv').getContext('2d');
-  charts.f=new Chart(x6,{type:'line',data:{labels,datasets:[{label:'MQL → SQL (%)',data:f.map(d=>{const tot=d.mp+d.mo;return tot>0?(d.sT/tot*100):null;}),borderColor:'#f43f5e',backgroundColor:grad(x6,'rgba(244,63,94,0.14)','rgba(244,63,94,0)'),fill:true,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#f43f5e',tension:.35,spanGaps:true}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:'%',color:'#475569'},ticks:{callback:v=>v.toFixed(0)+'%'}},x:{ticks:{maxRotation:45}}},plugins:{tooltip:{callbacks:{label:c=>'Conversão: '+c.raw.toFixed(1)+'%'}}}}});
+  charts.f=new Chart(x6,{type:'line',data:{labels,datasets:[{label:'MQL → SQL (%)',data:f.map(d=>{const tot=d.mp+d.mo;return tot>0?(d.sT/tot*100):null;}),borderColor:'#f43f5e',backgroundColor:'rgba(244,63,94,0.08)',fill:true,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#f43f5e',tension:.35,spanGaps:true}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:'%',color:'#475569'},ticks:{callback:v=>v.toFixed(0)+'%'}},x:{ticks:{maxRotation:45}}},plugins:{tooltip:{callbacks:{label:c=>'Conversão: '+c.raw.toFixed(1)+'%'}}}}});
 
   // 7 — Campanhas
   const x7=document.getElementById('cCamp').getContext('2d');
@@ -469,7 +469,7 @@ function renderCharts(){
 
   // 8 — Custo SQL
   const x8=document.getElementById('cCustoSQL').getContext('2d');
-  charts.h=new Chart(x8,{type:'line',data:{labels,datasets:[{label:'Custo SQL (R$)',data:f.map(d=>d.sp>0?d.cs:null),borderColor:'#f59e0b',backgroundColor:grad(x8,'rgba(245,158,11,0.15)','rgba(245,158,11,0)'),fill:true,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#f59e0b',tension:.35,spanGaps:true}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:'R$ por SQL',color:'#475569'},ticks:{callback:v=>'R$'+v.toFixed(0)}},x:{ticks:{maxRotation:45}}},plugins:{tooltip:{callbacks:{label:c=>'Custo SQL: '+brl(c.raw)}}}}});
+  charts.h=new Chart(x8,{type:'line',data:{labels,datasets:[{label:'Custo SQL (R$)',data:f.map(d=>d.sp>0?d.cs:null),borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,0.08)',fill:true,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#f59e0b',tension:.35,spanGaps:true}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:'R$ por SQL',color:'#475569'},ticks:{callback:v=>'R$'+v.toFixed(0)}},x:{ticks:{maxRotation:45}}},plugins:{tooltip:{callbacks:{label:c=>'Custo SQL: '+brl(c.raw)}}}}});
 }
 
 function renderTable(){
@@ -495,7 +495,11 @@ function renderTable(){
   document.getElementById('tbody').innerHTML=h;
 }
 
-renderKPIs();renderCharts();renderTable();
+window.addEventListener('load', function() {
+  renderKPIs();
+  renderCharts();
+  renderTable();
+});
 </script>
 </body>
 </html>
