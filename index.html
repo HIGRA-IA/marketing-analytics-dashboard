@@ -144,9 +144,9 @@ var D=[
 ];
 
 var SUB={
-  2024:{g:20563.53,mt:20740.97,t:41304.5,mp:119,mo:121,mT:240,sp:57,so:67,sT:124,cm:172.8,cs:724.64},
-  2025:{g:64501.81,mt:58881.75,t:123383.56,mp:1458,mo:537,mT:1995,sp:424,so:178,sT:602,cm:44.24,cs:291},
-  2026:{g:4796.36,mt:4211.04,t:9007.4,mp:220,mo:101,mT:321,sp:7,so:32,sT:39,cm:43.6,cs:1286.77}
+  2024:{g:20563.53,mt:20740.97,t:41304.5,mp:119,mo:121,mT:240,sp:57,so:67,sT:124,cm:172.1,cs:333.1},
+  2025:{g:64501.81,mt:58881.75,t:123383.56,mp:1458,mo:537,mT:1995,sp:424,so:178,sT:602,cm:61.84,cs:204.96},
+  2026:{g:4796.36,mt:4211.04,t:9007.4,mp:220,mo:101,mT:321,sp:7,so:32,sT:39,cm:28.06,cs:230.96}
 };
 
 Chart.defaults.color='#64748b';
@@ -176,8 +176,8 @@ function renderKPIs(){
   var tI=0,tMP=0,tMO=0,tSP=0,tSQL=0;
   for(var i=0;i<f.length;i++){tI+=f[i].t;tMP+=f[i].mp;tMO+=f[i].mo;tSP+=f[i].sp;tSQL+=f[i].sT;}
   var tMQL=tMP+tMO;
-  var avgCM=tMP>0?tI/tMP:0;
-  var avgCS=tSP>0?tI/tSP:0;
+  var avgCM=tMQL>0?tI/tMQL:0;
+  var avgCS=tSQL>0?tI/tSQL:0;
   var conv=tMQL>0?(tSQL/tMQL*100):0;
   var st=['linear-gradient(90deg,#3b82f6,#06b6d4)','linear-gradient(90deg,#10b981,#22d3ee)','linear-gradient(90deg,#f59e0b,#f97316)','linear-gradient(90deg,#f43f5e,#e1306c)','linear-gradient(90deg,#8b5cf6,#3b82f6)','linear-gradient(90deg,#06b6d4,#10b981)'];
   var kpis=[
@@ -237,7 +237,7 @@ function renderCharts(){
 
   // 2 — Custo MQL
   CH.b=new Chart(document.getElementById('c2'),{type:'line',data:{labels:lb,datasets:[
-    {label:'Custo MQL (R$)',data:f.map(function(d){return d.mp>0?d.cm:null;}),borderColor:'#10b981',backgroundColor:'rgba(16,185,129,.08)',fill:true,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#10b981',tension:.35,spanGaps:true}
+    {label:'Custo MQL (R$)',data:f.map(function(d){var mql=d.mp+d.mo;return mql>0?d.t/mql:null;}),borderColor:'#10b981',backgroundColor:'rgba(16,185,129,.08)',fill:true,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#10b981',tension:.35,spanGaps:true}
   ]},options:lineOpts('R$ por MQL',function(v){return 'R$'+v.toFixed(0);})});
 
   // 3 — Google vs Meta (LINHAS)
@@ -275,7 +275,7 @@ function renderCharts(){
 
   // 8 — Custo SQL
   CH.h=new Chart(document.getElementById('c8'),{type:'line',data:{labels:lb,datasets:[
-    {label:'Custo SQL (R$)',data:f.map(function(d){return d.sp>0?d.cs:null;}),borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,.08)',fill:true,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#f59e0b',tension:.35,spanGaps:true}
+    {label:'Custo SQL (R$)',data:f.map(function(d){return d.sT>0?d.t/d.sT:null;}),borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,.08)',fill:true,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#f59e0b',tension:.35,spanGaps:true}
   ]},options:lineOpts('R$ por SQL',function(v){return 'R$'+v.toFixed(0);})});
 }
 
@@ -283,8 +283,8 @@ function renderTable(){
   var f=GF();
   var h='';
   for(var i=0;i<f.length;i++){
-    var d=f[i];
-    h+='<tr><td>'+d.m+'/'+d.y+'</td><td>'+brl(d.g)+'</td><td>'+brl(d.mt)+'</td><td>'+brl(d.t)+'</td><td style="text-align:center">'+d.c+'</td><td>'+d.mp+'</td><td>'+(d.mp>0?brl(d.cm):'—')+'</td><td>'+d.mo+'</td><td>'+(d.mp+d.mo)+'</td><td>'+d.sp+'</td><td>'+(d.sp>0?brl(d.cs):'—')+'</td><td>'+d.so+'</td><td>'+d.sT+'</td></tr>';
+    var d=f[i];var mql=d.mp+d.mo;var cmql=mql>0?d.t/mql:0;var csql=d.sT>0?d.t/d.sT:0;
+    h+='<tr><td>'+d.m+'/'+d.y+'</td><td>'+brl(d.g)+'</td><td>'+brl(d.mt)+'</td><td>'+brl(d.t)+'</td><td style="text-align:center">'+d.c+'</td><td>'+d.mp+'</td><td>'+(mql>0?brl(cmql):'—')+'</td><td>'+d.mo+'</td><td>'+mql+'</td><td>'+d.sp+'</td><td>'+(d.sT>0?brl(csql):'—')+'</td><td>'+d.so+'</td><td>'+d.sT+'</td></tr>';
     var idx=D.indexOf(d);
     var next=D[idx+1];
     if((!next||next.y!==d.y)&&SUB[d.y]){
