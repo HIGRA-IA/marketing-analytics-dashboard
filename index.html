@@ -81,7 +81,7 @@ tbody td:first-child{font-family:'Outfit',sans-serif;font-weight:500;color:var(-
     </div>
   </header>
   <section class="krow" id="kpis"></section>
-  <div class="g1"><div class="card"><div class="chead"><div><div class="ctitle">Despesas vs MQLs Gerados</div><div class="csub">Despesas mensais × volume de MQLs pagos e orgânicos</div></div><span class="tag tblue">Tendência</span></div><div class="cbox-lg"><canvas id="c1"></canvas></div></div></div>
+  <div class="g1"><div class="card"><div class="chead"><div><div class="ctitle">Despesas vs MQLs vs SQLs</div><div class="csub">Despesas mensais × MQL Total × SQL Total do período</div></div><span class="tag tblue">Tendência</span></div><div class="cbox-lg"><canvas id="c1"></canvas></div></div></div>
   <div class="g2">
     <div class="card"><div class="chead"><div><div class="ctitle">Custo MQL — Evolução</div><div class="csub">Custo por MQL de tráfego pago</div></div><span class="tag tgreen">Eficiência</span></div><div class="cbox"><canvas id="c2"></canvas></div></div>
     <div class="card"><div class="chead"><div><div class="ctitle">Google vs Meta — Despesas</div><div class="csub">Comparativo de investimento por plataforma</div></div><span class="tag trose">Plataformas</span></div><div class="cbox"><canvas id="c3"></canvas></div></div>
@@ -239,14 +239,14 @@ function renderCharts(){
   kill();
   var f=GF(),lb=GL(f);
 
-  // 1 — Despesas + MQLs (dual axis)
+  // 1 — Despesas + MQL Total + SQL Total (dual axis)
   CH.a=new Chart(document.getElementById('c1'),{type:'line',data:{labels:lb,datasets:[
     {label:'Despesas (R$)',data:f.map(function(d){return d.t;}),borderColor:'#3b82f6',backgroundColor:'rgba(59,130,246,.08)',fill:true,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#3b82f6',tension:.35,yAxisID:'y'},
-    {label:'MQL Pago',data:f.map(function(d){return d.mp;}),borderColor:'#10b981',backgroundColor:'rgba(16,185,129,.08)',fill:true,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#10b981',tension:.35,yAxisID:'y1'},
-    {label:'MQL Orgânico',data:f.map(function(d){return d.mo;}),borderColor:'#fbbf24',borderWidth:2,pointRadius:2,pointBackgroundColor:'#fbbf24',tension:.35,borderDash:[5,3],yAxisID:'y1'}
+    {label:'MQL Total',data:f.map(function(d){return d.mp+d.mo;}),borderColor:'#10b981',backgroundColor:'rgba(16,185,129,.08)',fill:true,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#10b981',tension:.35,yAxisID:'y1'},
+    {label:'SQL Total',data:f.map(function(d){return d.sT;}),borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,.08)',fill:true,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#f59e0b',tension:.35,yAxisID:'y1'}
   ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},scales:{
     y:{position:'left',title:{display:true,text:'Despesas (R$)',color:'#475569'},grid:{color:'rgba(27,36,51,.7)'},ticks:{callback:function(v){return 'R$'+(v/1000).toFixed(0)+'K';}}},
-    y1:{position:'right',grid:{drawOnChartArea:false},title:{display:true,text:'MQLs',color:'#475569'}},
+    y1:{position:'right',grid:{drawOnChartArea:false},title:{display:true,text:'MQLs / SQLs',color:'#475569'}},
     x:{grid:{color:'rgba(27,36,51,.4)'},ticks:{maxRotation:45}}
   }}});
 
