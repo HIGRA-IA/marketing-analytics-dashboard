@@ -144,9 +144,9 @@ var D=[
 ];
 
 var SUB={
-  2024:{g:20563.53,mt:20740.97,t:41304.5,mp:119,mo:121,mT:240,sp:57,so:67,sT:124,cm:172.1,cs:333.1},
-  2025:{g:64501.81,mt:58881.75,t:123383.56,mp:1458,mo:537,mT:1995,sp:424,so:178,sT:602,cm:61.84,cs:204.96},
-  2026:{g:4796.36,mt:4211.04,t:9007.4,mp:220,mo:101,mT:321,sp:7,so:32,sT:39,cm:28.06,cs:230.96}
+  2024:{g:20563.53,mt:20740.97,t:41304.5,mp:119,mo:121,mT:240,sp:57,so:67,sT:124},
+  2025:{g:64501.81,mt:58881.75,t:123383.56,mp:1458,mo:537,mT:1995,sp:424,so:178,sT:602},
+  2026:{g:4796.36,mt:4211.04,t:9007.4,mp:220,mo:101,mT:321,sp:7,so:32,sT:39}
 };
 
 Chart.defaults.color='#64748b';
@@ -176,8 +176,6 @@ function renderKPIs(){
   var tI=0,tMP=0,tMO=0,tSP=0,tSQL=0;
   for(var i=0;i<f.length;i++){tI+=f[i].t;tMP+=f[i].mp;tMO+=f[i].mo;tSP+=f[i].sp;tSQL+=f[i].sT;}
   var tMQL=tMP+tMO;
-  var avgCM=tMQL>0?tI/tMQL:0;
-  var avgCS=tSQL>0?tI/tSQL:0;
   var avgCMP=tMP>0?tI/tMP:0;
   var avgCSP=tSP>0?tI/tSP:0;
   var conv=tMQL>0?(tSQL/tMQL*100):0;
